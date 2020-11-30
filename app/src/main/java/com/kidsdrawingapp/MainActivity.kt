@@ -1,7 +1,9 @@
 package com.kidsdrawingapp
 
 import android.app.Dialog
+import android.media.Image
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -53,5 +55,28 @@ class MainActivity : AppCompatActivity() {
         }
 
         brushDialog.show()
+    }
+
+    fun paintClicked(view: View) {
+        if (view !== mImageButtonCurrentPaint) {
+            // Update the color
+            val imageButton = view as ImageButton
+            // Here the tag is used for swapping the current color with previous color.
+            // The tag stores the selected view
+            val colorTag = imageButton.tag.toString()
+            // The color is set as per the selected tag here.
+            drawing_view.setColor(colorTag)
+            // Swap the backgrounds for last active and currently active image button.
+            imageButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.palette_pressed))
+            mImageButtonCurrentPaint!!.setImageDrawable(
+                    ContextCompat.getDrawable(
+                            this,
+                            R.drawable.palette_normal
+                    )
+            )
+
+            //Current view is updated with selected view in the form of ImageButton.
+            mImageButtonCurrentPaint = view
+        }
     }
 }
